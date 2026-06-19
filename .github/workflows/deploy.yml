@@ -1,4 +1,4 @@
-name: Deploy Ecommerce API
+name: Deploy CommerceCore-Cloud-Platform
 
 on:
   push:
