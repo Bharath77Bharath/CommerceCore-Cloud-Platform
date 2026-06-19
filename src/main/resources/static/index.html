@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce API</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 50px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #38bdf8;
+            font-size: 3rem;
+        }
+
+        h2 {
+            color: #94a3b8;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 20px;
+            background: #38bdf8;
+            color: black;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: #0ea5e9;
+        }
+
+        ul {
+            text-align: left;
+            display: inline-block;
+        }
+
+        footer {
+            margin-top: 40px;
+            color: #94a3b8;
+        }
+
+        code {
+            color: #38bdf8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🛒 Ecommerce API</h1>
+
+    <h2>Spring Boot • PostgreSQL • Docker • AWS EC2 • GitHub Actions</h2>
+
+    <div class="card">
+        <h3>About</h3>
+        <p>
+            A production-style Ecommerce REST API built using Spring Boot and PostgreSQL,
+            containerized with Docker, deployed on AWS EC2, and automated using GitHub Actions CI/CD.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>Features</h3>
+        <ul>
+            <li>Product Management (CRUD)</li>
+            <li>Search Products</li>
+            <li>Pagination Support</li>
+            <li>Order Management</li>
+            <li>Review Management</li>
+            <li>Product Image Management</li>
+            <li>Dockerized Deployment</li>
+            <li>AWS EC2 Hosting</li>
+            <li>GitHub Actions CI/CD</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>API Endpoints</h3>
+
+        <p><code>GET /api/products</code></p>
+        <p><code>POST /api/products</code></p>
+        <p><code>PUT /api/products/{id}</code></p>
+        <p><code>DELETE /api/products/{id}</code></p>
+
+        <p><code>POST /api/orders</code></p>
+        <p><code>GET /api/orders/{id}</code></p>
+
+        <p><code>POST /api/reviews</code></p>
+        <p><code>POST /api/products/{id}/images</code></p>
+    </div>
+
+    <div class="card">
+        <h3>Documentation</h3>
+
+        <a class="btn" href="/swagger-ui/index.html">
+            Swagger UI
+        </a>
+
+        <a class="btn" href="https://github.com/Bharath77Bharath/Ecommerce-API" target="_blank">
+            GitHub Repository
+        </a>
+    </div>
+
+    <footer>
+        <p>Version 1.0</p>
+        <p>Developed by Bharath</p>
+    </footer>
+
+</div>
+
+</body>
+</html>
