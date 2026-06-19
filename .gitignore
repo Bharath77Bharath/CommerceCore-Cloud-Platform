@@ -12,6 +12,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
+ecommerce-key.pem
 
 ### IntelliJ IDEA ###
 .idea
