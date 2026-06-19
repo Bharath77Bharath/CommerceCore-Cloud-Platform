@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bharath</groupId>
-	<artifactId>Ecommerce</artifactId>
+	<artifactId>CommerceCore-Cloud-Platform</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>
