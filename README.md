@@ -1,106 +1,115 @@
-# 🛒 Ecommerce API
+# 🚀 CommerceCore Cloud Platform
 
-A production-style Ecommerce Backend built with **Spring Boot**, **PostgreSQL**, **Docker**, **AWS EC2**, and **CI/CD**.
+### Cloud-Native Ecommerce Backend with AWS, Docker & CI/CD
 
-Designed to simulate real-world ecommerce operations including product management, reviews, images, searching, pagination, and order processing.
+CommerceCore Cloud Platform is a production-style Ecommerce Backend built using **Spring Boot**, **PostgreSQL**, **Docker**, **AWS EC2**, and **GitHub Actions CI/CD**.
+
+The project demonstrates the complete software delivery lifecycle—from backend development and database design to containerization, cloud deployment, and automated CI/CD pipelines.
 
 ---
 
-## 🚀 Features
+## 🌟 Key Highlights
 
-### 📦 Product Management
+✅ RESTful Ecommerce Backend
 
-* ✅ Create Product
-* ✅ Get Product By ID
-* ✅ Get All Products
-* ✅ Update Product
-* ✅ Delete Product
-* ✅ Pagination Support
-* ✅ Dynamic Product Search
+✅ PostgreSQL Database Integration
 
-### ⭐ Product Reviews
+✅ Dockerized Application
+
+✅ Docker Compose Multi-Container Setup
+
+✅ AWS EC2 Cloud Deployment
+
+✅ GitHub Actions CI/CD Pipeline
+
+✅ Automated Build & Deployment
+
+✅ Dynamic Product Search & Pagination
+
+✅ Order Processing System
+
+✅ Product Reviews & Image Management
+
+---
+
+## 🏗 Solution Architecture
+
+```text
+Developer
+    │
+    ▼
+GitHub Repository
+    │
+    ▼
+GitHub Actions CI/CD
+    │
+    ▼
+AWS EC2 (Ubuntu)
+    │
+    ▼
+Docker Compose
+ ┌───────────────┐
+ │ Spring Boot   │
+ │ Application   │
+ └───────────────┘
+         │
+         ▼
+ ┌───────────────┐
+ │ PostgreSQL    │
+ │ Database      │
+ └───────────────┘
+```
+
+---
+
+## 📦 Core Features
+
+### Product Management
+
+* Create Product
+* Get Product By ID
+* Get All Products
+* Update Product
+* Delete Product
+* Pagination Support
+* Dynamic Search
+
+### Product Reviews
 
 * Add Reviews
 * Automatic Rating Calculation
 * Automatic Review Count Updates
 
-### 🖼 Product Images
+### Product Images
 
-* Add Images to Products
-* Multiple Images per Product
+* Add Product Images
+* Multiple Images Per Product
 
-### 🛍 Order Management
+### Order Management
 
 * Create Orders
-* Get Order By ID
-* Get Order By Reference Number
-* UUID Reference Number Generation
+* Get Orders By ID
+* Get Orders By Reference Number
+* UUID Reference Generation
 * Tax Calculation
-* Total Amount Calculation
+* Total Price Calculation
 
-### 🔄 DTO Mapping
+### DTO Mapping
 
 * Request DTOs
 * Response DTOs
-* Entity → DTO Conversion
-* DTO → Entity Conversion
-
-### 🗄 Database Relationships
-
-* Product ↔ Product Images
-* Product ↔ Product Reviews
-* Order ↔ Order Items
-* Order Item ↔ Product
-
----
-
-## 🏗 Architecture
-
-```text
-Client
-   │
-   ▼
-Controller Layer
-   │
-   ▼
-Service Layer
-   │
-   ▼
-Repository Layer
-   │
-   ▼
-PostgreSQL Database
-```
-
----
-
-## 📂 Project Structure
-
-```text
-src/main/java/com/bharath/Ecommerce
-
-├── Controller
-├── Service
-├── Repository
-├── Entity
-├── Dto
-├── Specification
-└── Seed
-```
+* Entity ↔ DTO Conversion
 
 ---
 
 ## 🔍 Search & Pagination
 
-### Search Products
-
-Filter using:
+Filter Products By:
 
 * Category
-* Min Price
-* Max Price
-* Ratings
-* Keyword
+* Price Range
+* Rating
+* Keywords
 
 Example:
 
@@ -108,11 +117,32 @@ Example:
 GET /api/products/search?category=Phone&minPrice=50000&maxPrice=150000&ratings=4
 ```
 
-### Pagination
+Pagination:
 
 ```http
 GET /api/products?page=0&size=5
 ```
+
+---
+
+## 🗄 Database Relationships
+
+```text
+Product
+ ├── Images
+ └── Reviews
+
+Order
+ └── Order Items
+          └── Product
+```
+
+Implemented using:
+
+* One-To-Many Mapping
+* Many-To-One Mapping
+* JPA/Hibernate Relationships
+* Cascade Operations
 
 ---
 
@@ -129,23 +159,17 @@ GET /api/products?page=0&size=5
 | DELETE | /api/products/{id}   |
 | GET    | /api/products/search |
 
----
-
 ### Reviews
 
 | Method | Endpoint                 |
 | ------ | ------------------------ |
 | POST   | /api/products/review/add |
 
----
-
 ### Images
 
 | Method | Endpoint                |
 | ------ | ----------------------- |
 | POST   | /api/products/image/add |
-
----
 
 ### Orders
 
@@ -157,10 +181,28 @@ GET /api/products?page=0&size=5
 
 ---
 
-## 🛠 Tech Stack
+## 📂 Project Structure
+
+```text
+src/main/java/com/bharath/Ecommerce
+
+├── Controller
+├── Service
+├── Repository
+├── Entity
+├── Dto
+├── Specification
+├── Config
+└── Seed
+```
+
+---
+
+## 🛠 Technology Stack
 
 ### Backend
 
+* Java 21
 * Spring Boot
 * Spring Data JPA
 * Hibernate
@@ -170,37 +212,53 @@ GET /api/products?page=0&size=5
 
 * PostgreSQL
 
-### DevOps
+### DevOps & Cloud
 
 * Docker
+* Docker Compose
 * AWS EC2
 * GitHub Actions
+* Linux (Ubuntu)
 
-### Language
+### API Documentation
 
-* Java 21
-
----
-
-## 🐳 Dockerized Application
-
-Build Docker Image
-
-```bash
-docker build -t ecommerce-api .
-```
-
-Run Container
-
-```bash
-docker run -p 8080:8080 ecommerce-api
-```
+* Swagger / OpenAPI
 
 ---
 
-## ☁ AWS Deployment
+## 🐳 Docker Deployment
 
-The application is deployed on an AWS EC2 Linux instance.
+Build Image:
+
+```bash
+docker build -t commercecore .
+```
+
+Run Container:
+
+```bash
+docker run -p 8080:8080 commercecore
+```
+
+Run Full Stack:
+
+```bash
+docker compose up -d
+```
+
+---
+
+## ☁ AWS Cloud Deployment
+
+Application deployed on:
+
+* AWS EC2 (Ubuntu)
+* Docker Containers
+* PostgreSQL Container
+* Security Groups
+* SSH Key Authentication
+
+Deployment Flow:
 
 ```text
 Developer
@@ -209,70 +267,92 @@ Developer
 GitHub
     │
     ▼
-Docker Image
-    │
-    ▼
 AWS EC2
     │
     ▼
-Spring Boot Application
+Docker Compose
     │
     ▼
-PostgreSQL
+Spring Boot + PostgreSQL
 ```
 
 ---
 
 ## 🔄 CI/CD Pipeline
 
-Automated deployment using GitHub Actions.
+Automated deployment implemented using GitHub Actions.
+
+### Workflow
 
 ```text
 Code Change
-     │
-     ▼
+      │
+      ▼
 Git Push
-     │
-     ▼
+      │
+      ▼
 GitHub Actions
-     │
-     ▼
-Build & Test
-     │
-     ▼
-Docker Build
-     │
-     ▼
-AWS EC2 Deploy
-     │
-     ▼
-Production Ready
+      │
+      ▼
+SSH into EC2
+      │
+      ▼
+Git Pull
+      │
+      ▼
+Maven Build
+      │
+      ▼
+Docker Rebuild
+      │
+      ▼
+Container Restart
+      │
+      ▼
+Production Deployment
 ```
 
-### Use Cases
+### Automated Tasks
 
-* Feature Releases
-* Bug Fixes
-* Authentication Updates
-* Payment Gateway Integration
-* Performance Improvements
+* Pull Latest Source Code
+* Build Spring Boot Application
+* Rebuild Docker Image
+* Restart Containers
+* Deploy Latest Version
 
 ---
 
-## 📚 Concepts Practiced
+## 🎯 Concepts Demonstrated
 
-* REST APIs
+### Backend Engineering
+
+* REST API Development
 * DTO Pattern
-* Entity Relationships
-* One-To-Many Mapping
-* Many-To-One Mapping
-* Pagination
-* Dynamic Searching
-* Docker
-* AWS EC2
-* CI/CD
-* PostgreSQL
 * Layered Architecture
+* Dynamic Searching
+* Pagination
+
+### Database Design
+
+* PostgreSQL
+* JPA/Hibernate
+* Entity Relationships
+
+### DevOps
+
+* Docker
+* Docker Compose
+* Linux
+* AWS EC2
+* GitHub Actions
+* CI/CD Automation
+
+### Cloud Computing
+
+* EC2 Instance Management
+* Security Groups
+* SSH Authentication
+* Environment Configuration
 
 ---
 
@@ -282,16 +362,17 @@ Production Ready
 * Role-Based Access Control
 * Shopping Cart
 * Payment Gateway Integration
-* Inventory Management
-* Swagger Documentation
+* Redis Caching
 * Unit Testing
 * Integration Testing
+* AWS RDS Migration
+* AWS ECR Deployment
 
 ---
 
 ## 👨‍💻 Author
 
-### Bharath
+**Bharath**
 
 Aspiring Software Developer | Cloud & DevOps Enthusiast
 
