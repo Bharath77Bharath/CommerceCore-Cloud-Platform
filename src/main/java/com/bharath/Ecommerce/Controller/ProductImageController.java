@@ -6,6 +6,7 @@ import com.bharath.Ecommerce.Service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,7 @@ public class ProductImageController {
     private final ProductService productService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductDto> addImage(@RequestBody ProductImageDto productImageDto) {
         ProductDto productDto = productService.addImage(productImageDto);
 
