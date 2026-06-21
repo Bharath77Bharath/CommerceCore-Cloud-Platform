@@ -33,6 +33,11 @@ public class Order {
     private String status;
     private String referenceNo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Users user;
 
+    private String customerName;
+    private String customerEmail;
 
 }

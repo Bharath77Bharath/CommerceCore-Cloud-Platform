@@ -7,6 +7,9 @@ import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.extern.apachecommons.CommonsLog;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 public class Users {
@@ -23,4 +26,7 @@ public class Users {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-}
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders = new ArrayList<>();
+ }

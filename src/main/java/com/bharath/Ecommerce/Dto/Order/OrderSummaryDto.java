@@ -12,6 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OrderSummaryDto {
 
+    private String customerName;
+    private String customerEmail;
     private String referenceNo;
+    private String message;
 
 }

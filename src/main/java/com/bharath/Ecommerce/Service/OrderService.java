@@ -8,9 +8,14 @@ import com.bharath.Ecommerce.Dto.Order.OrderItemDto;
 import com.bharath.Ecommerce.Entity.Order;
 import com.bharath.Ecommerce.Entity.OrderItem;
 import com.bharath.Ecommerce.Entity.Product;
+import com.bharath.Ecommerce.Entity.Users;
 import com.bharath.Ecommerce.Repository.OrderRepository;
 import com.bharath.Ecommerce.Repository.ProductRepository;
+import com.bharath.Ecommerce.Repository.UserRepository;
+import com.bharath.Ecommerce.Security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +27,14 @@ public class OrderService {
 
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
 
     public OrderDto convertToDto(Order order) {
         OrderDto orderDto = new OrderDto();
 
         orderDto.setId(order.getId());
+        orderDto.setCustomerName(order.getCustomerName());
+        orderDto.setCustomerEmail(order.getCustomerEmail());
         orderDto.setTotalItemsAmount(order.getTotalItemsAmount());
         orderDto.setTaxAmount(order.getTaxAmount());
         orderDto.setTotalAmount(order.getTotalAmount());
@@ -46,11 +54,22 @@ public class OrderService {
                         .toList();
         orderDto.setOrderItems(itemDtos);
 
+
         return orderDto;
     }
 
     public OrderSummaryDto createOrder(CreateOrderDto createOrderDto) {
         Order order = new Order();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        assert authentication != null;
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        assert userDetails != null;
+        Users currentUser = userDetails.getUser();
+
+        order.setUser(currentUser);
+        order.setCustomerName(currentUser.getName());
+        order.setCustomerEmail(currentUser.getEmail());
 
         double totalItemsAmount = 0;
 
@@ -88,7 +107,12 @@ public class OrderService {
 
         orderRepository.save(order);
 
-        return new OrderSummaryDto(referenceNO);
+        return new OrderSummaryDto(
+                currentUser.getName(),
+                currentUser.getEmail(),
+                referenceNO,
+                "Order placed Successfully"
+        );
     }
 
     public OrderDto getOrderById(Long id) {
