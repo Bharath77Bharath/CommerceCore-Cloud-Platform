@@ -16,6 +16,8 @@ public class ProductReviewDto {
     @NotNull(message = "Product ID is required")
     private Long product_id;
 
+    private String reviewerName;
+
     @NotBlank(message = "Comment cannot by empty")
     private String comment;
 

@@ -7,15 +7,19 @@ import com.bharath.Ecommerce.Dto.Product.ProductReviewDto;
 import com.bharath.Ecommerce.Entity.Product;
 import com.bharath.Ecommerce.Entity.ProductImage;
 import com.bharath.Ecommerce.Entity.ProductReview;
+import com.bharath.Ecommerce.Entity.Users;
 import com.bharath.Ecommerce.Repository.ProductImageRepository;
 import com.bharath.Ecommerce.Repository.ProductRepository;
 import com.bharath.Ecommerce.Repository.ProductReviewRepository;
+import com.bharath.Ecommerce.Security.CustomUserDetails;
 import com.bharath.Ecommerce.Specification.ProductSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -60,8 +64,9 @@ public class ProductService {
                 .stream()
                 .map(productReview -> new ProductReviewDto(
                         productReview.getProduct().getId(),
+                        productReview.getReviewerName(),
                         productReview.getComment(),
-                        productReview.getRating ()
+                        productReview.getRating()
                 ))
                 .toList();
         dto.setReviews(productReviewDtos);
@@ -69,6 +74,12 @@ public class ProductService {
         return dto;
     }
 
+    private Users getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+        return userDetails.getUser();
+    }
     //Read
 //    public List<Product> getAllProducts() {
 //        return productRepository.findAll();
@@ -148,6 +159,10 @@ public class ProductService {
 
         ProductReview productReview = new ProductReview();
 
+        Users currentUser = getCurrentUser();
+
+        productReview.setUser(currentUser);
+        productReview.setReviewerName(currentUser.getName());
         productReview.setComment(productReviewDto.getComment());
         productReview.setRating(productReviewDto.getRating());
 

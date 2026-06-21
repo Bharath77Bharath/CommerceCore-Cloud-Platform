@@ -29,4 +29,10 @@ public class ProductReview {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Users user;
+
+    private String reviewerName;
+
 }
