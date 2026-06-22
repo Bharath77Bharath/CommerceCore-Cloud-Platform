@@ -1,6 +1,7 @@
 package com.bharath.Ecommerce.Dto.Order;
 
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CreateOrderDto {
 
+    @NotEmpty
     private List<OrderItemDto> orderItemDto;
 
 }

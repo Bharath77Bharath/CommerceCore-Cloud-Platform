@@ -17,34 +17,14 @@ import java.util.List;
 public class ProductDto {
 
     private Long id;
-
-
-    @NotBlank(message = "Name field is required")
     private String name;
-
-
-    @NotNull(message = "Price field is required")
-    @PositiveOrZero(message = "Value must be zero or greater than zero")
     private Double price;
-
-    @NotBlank(message = "Description field is required")
     private String description;
-
     private String category;
-
     private Double ratings = 0.0;
-
-    @NotBlank(message = "Seller is required")
     private String seller;
-
-    @NotNull(message = "Stock field is required")
     private Integer stock;
-
     private Integer numOfReviews = 0;
-
-
     private List<ProductImageDto> images;
-
-
     private List<ProductReviewDto> reviews;
 }
