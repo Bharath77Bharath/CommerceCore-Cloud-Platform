@@ -1,18 +1,32 @@
-# 🚀 CommerceCore Cloud Platform
+# 🚀 CommerceCore – Cloud-Native Ecommerce Backend Platform
 
-### Cloud-Native Ecommerce Backend with AWS, Docker & CI/CD
+### Production-Style Ecommerce Backend with Spring Boot, PostgreSQL, AWS, Docker & CI/CD
 
-CommerceCore Cloud Platform is a production-style Ecommerce Backend built using **Spring Boot**, **PostgreSQL**, **Docker**, **AWS EC2**, and **GitHub Actions CI/CD**.
+CommerceCore is a production-style Ecommerce Backend Platform built to demonstrate modern backend engineering, cloud deployment, security, and DevOps practices.
 
-The project demonstrates the complete software delivery lifecycle—from backend development and database design to containerization, cloud deployment, and automated CI/CD pipelines.
+The project evolved beyond a traditional CRUD application by incorporating authentication, authorization, order ownership, validation, exception handling, containerization, cloud deployment, and automated CI/CD pipelines.
 
 ---
 
-## 🌟 Key Highlights
+# 🌟 Key Highlights
 
 ✅ RESTful Ecommerce Backend
 
 ✅ PostgreSQL Database Integration
+
+✅ JWT Authentication
+
+✅ Role-Based Authorization (USER / ADMIN)
+
+✅ Order Ownership & Resource Security
+
+✅ Product Reviews & Image Management
+
+✅ Request Validation
+
+✅ Global Exception Handling
+
+✅ Audit Fields (createdAt / updatedAt)
 
 ✅ Dockerized Application
 
@@ -24,15 +38,9 @@ The project demonstrates the complete software delivery lifecycle—from backend
 
 ✅ Automated Build & Deployment
 
-✅ Dynamic Product Search & Pagination
-
-✅ Order Processing System
-
-✅ Product Reviews & Image Management
-
 ---
 
-## 🏗 Solution Architecture
+# 🏗 Solution Architecture
 
 ```text
 Developer
@@ -62,9 +70,47 @@ Docker Compose
 
 ---
 
-## 📦 Core Features
+# 🏛 Application Architecture
 
-### Product Management
+```text
+Client
+   │
+   ▼
+Controller Layer
+   │
+   ▼
+Service Layer
+   │
+   ▼
+Repository Layer
+   │
+   ▼
+PostgreSQL Database
+```
+
+Security Flow:
+
+```text
+JWT Token
+     │
+     ▼
+JwtFilter
+     │
+     ▼
+Spring Security
+     │
+     ▼
+Security Context
+     │
+     ▼
+Protected Controllers
+```
+
+---
+
+# 📦 Core Features
+
+## Product Management
 
 * Create Product
 * Get Product By ID
@@ -74,35 +120,64 @@ Docker Compose
 * Pagination Support
 * Dynamic Search
 
-### Product Reviews
+---
+
+## Product Reviews
 
 * Add Reviews
 * Automatic Rating Calculation
 * Automatic Review Count Updates
+* Reviewer Ownership Tracking
+* Reviewer Name Display
 
-### Product Images
+---
+
+## Product Images
 
 * Add Product Images
 * Multiple Images Per Product
 
-### Order Management
+---
+
+## Order Management
 
 * Create Orders
 * Get Orders By ID
 * Get Orders By Reference Number
+* Get My Orders
+* Admin View All Orders
 * UUID Reference Generation
 * Tax Calculation
 * Total Price Calculation
-
-### DTO Mapping
-
-* Request DTOs
-* Response DTOs
-* Entity ↔ DTO Conversion
+* Customer Ownership Tracking
 
 ---
 
-## 🔍 Search & Pagination
+## DTO Architecture
+
+Implemented DTO Pattern throughout the application.
+
+Examples:
+
+* CreateProductDto
+* ProductDto
+* RegisterRequestDto
+* RegisterResponseDto
+* LoginRequestDto
+* LoginResponseDto
+* OrderDto
+* OrderSummaryDto
+
+Benefits:
+
+* Prevents Entity Exposure
+* Cleaner APIs
+* Better Maintainability
+* Separation of Concerns
+
+---
+
+# 🔍 Search & Pagination
 
 Filter Products By:
 
@@ -125,63 +200,267 @@ GET /api/products?page=0&size=5
 
 ---
 
-## 🗄 Database Relationships
+# 🔐 Authentication & Authorization
+
+CommerceCore implements JWT-based Authentication and Role-Based Authorization using Spring Security.
+
+## Authentication Features
+
+* User Registration
+* User Login
+* BCrypt Password Encryption
+* JWT Token Generation
+* JWT Token Validation
+* Protected API Access
+
+---
+
+## Roles
+
+### USER
+
+Allowed:
+
+* Register
+* Login
+* View Products
+* Search Products
+* Create Orders
+* View Own Orders
+* Add Reviews
+* Add Product Images
+
+Restricted:
+
+* Create Product
+* Update Product
+* Delete Product
+
+---
+
+### ADMIN
+
+Allowed:
+
+* Full Product Management
+* View All Orders
+* View Any Order
+* All USER Permissions
+
+---
+
+## Security Components
+
+* SecurityConfig
+* JwtFilter
+* JwtService
+* AuthenticationManager
+* CustomUserDetailsService
+* BCryptPasswordEncoder
+
+---
+
+# 📦 Order Ownership System
+
+A complete order ownership system was implemented.
+
+## Features
+
+* Orders linked to authenticated users
+* Customer Name Snapshot
+* Customer Email Snapshot
+* User-Specific Order Retrieval
+* Ownership Validation
+* Admin Override Access
+
+### Security Rules
 
 ```text
+USER
+ ├── Can access own orders only
+
+ADMIN
+ ├── Can access all orders
+```
+
+---
+
+# ⭐ Review Ownership
+
+Product reviews are associated with authenticated users.
+
+## Features
+
+* Reviewer Ownership Tracking
+* Reviewer Name Snapshot Storage
+* Reviewer Name Returned in Product Responses
+
+Example:
+
+```json
+{
+  "reviewerName": "Bharath",
+  "rating": 5,
+  "comment": "Excellent Product"
+}
+```
+
+---
+
+# 🗄 Database Relationships
+
+```text
+Users
+ ├── Orders
+ │      └── OrderItems
+ │              └── Product
+ │
+ └── ProductReviews
+         └── Product
+
 Product
  ├── Images
  └── Reviews
-
-Order
- └── Order Items
-          └── Product
 ```
 
 Implemented using:
 
 * One-To-Many Mapping
 * Many-To-One Mapping
-* JPA/Hibernate Relationships
+* Bidirectional Relationships
 * Cascade Operations
+* JPA/Hibernate Relationships
 
 ---
 
-## 📋 API Endpoints
+# 📋 API Endpoints
 
-### Products
+## Authentication
 
-| Method | Endpoint             |
-| ------ | -------------------- |
-| POST   | /api/products/create |
-| GET    | /api/products        |
-| GET    | /api/products/{id}   |
-| PUT    | /api/products/{id}   |
-| DELETE | /api/products/{id}   |
-| GET    | /api/products/search |
+| Method | Endpoint           |
+| ------ | ------------------ |
+| POST   | /api/auth/register |
+| POST   | /api/auth/login    |
 
-### Reviews
+---
+
+## Products
+
+| Method | Endpoint                  |
+| ------ | ------------------------- |
+| POST   | /api/products/add         |
+| GET    | /api/products             |
+| GET    | /api/products/{id}        |
+| PUT    | /api/products/update/{id} |
+| DELETE | /api/products/delete/{id} |
+| GET    | /api/products/search      |
+
+---
+
+## Reviews
 
 | Method | Endpoint                 |
 | ------ | ------------------------ |
 | POST   | /api/products/review/add |
 
-### Images
+---
+
+## Images
 
 | Method | Endpoint                |
 | ------ | ----------------------- |
 | POST   | /api/products/image/add |
 
-### Orders
+---
+
+## Orders
 
 | Method | Endpoint                            |
 | ------ | ----------------------------------- |
 | POST   | /api/orders/create                  |
+| GET    | /api/orders/my-orders               |
 | GET    | /api/orders/id/{id}                 |
 | GET    | /api/orders/reference/{referenceNo} |
+| GET    | /api/admin/orders                   |
 
 ---
 
-## 📂 Project Structure
+# ✅ Request Validation
+
+Request validation implemented using Jakarta Validation.
+
+Validation annotations used:
+
+* @NotBlank
+* @NotNull
+* @PositiveOrZero
+* @Email
+* @Valid
+
+Benefits:
+
+* Prevents Invalid Data
+* Protects Business Logic
+* Cleaner API Responses
+
+---
+
+# 🚨 Global Exception Handling
+
+Centralized exception handling implemented using:
+
+```java
+@RestControllerAdvice
+```
+
+Features:
+
+* Runtime Exception Handling
+* Validation Exception Handling
+* Consistent Error Responses
+* Cleaner API Design
+
+Example Response:
+
+```json
+{
+  "message": "Product not found",
+  "status": 404,
+  "timestamp": "2026-06-23T10:30:00"
+}
+```
+
+---
+
+# 🕒 Audit Fields
+
+Automatic auditing implemented across core entities.
+
+## Fields
+
+* createdAt
+* updatedAt
+
+Implemented using:
+
+* @MappedSuperclass
+* @PrePersist
+* @PreUpdate
+
+Tracks:
+
+* Record Creation Time
+* Record Modification Time
+
+Applied To:
+
+* Product
+* Order
+* ProductReview
+
+---
+
+# 📂 Project Structure
 
 ```text
 src/main/java/com/bharath/Ecommerce
@@ -192,15 +471,17 @@ src/main/java/com/bharath/Ecommerce
 ├── Entity
 ├── Dto
 ├── Specification
+├── Security
 ├── Config
+├── Exception
 └── Seed
 ```
 
 ---
 
-## 🛠 Technology Stack
+# 🛠 Technology Stack
 
-### Backend
+## Backend
 
 * Java 21
 * Spring Boot
@@ -208,11 +489,17 @@ src/main/java/com/bharath/Ecommerce
 * Hibernate
 * Maven
 
-### Database
+## Database
 
 * PostgreSQL
 
-### DevOps & Cloud
+## Security
+
+* Spring Security
+* JWT Authentication
+* BCrypt Password Encryption
+
+## DevOps & Cloud
 
 * Docker
 * Docker Compose
@@ -220,13 +507,13 @@ src/main/java/com/bharath/Ecommerce
 * GitHub Actions
 * Linux (Ubuntu)
 
-### API Documentation
+## API Documentation
 
 * Swagger / OpenAPI
 
 ---
 
-## 🐳 Docker Deployment
+# 🐳 Docker Deployment
 
 Build Image:
 
@@ -248,7 +535,7 @@ docker compose up -d
 
 ---
 
-## ☁ AWS Cloud Deployment
+# ☁ AWS Cloud Deployment
 
 Application deployed on:
 
@@ -267,6 +554,9 @@ Developer
 GitHub
     │
     ▼
+GitHub Actions
+    │
+    ▼
 AWS EC2
     │
     ▼
@@ -278,11 +568,11 @@ Spring Boot + PostgreSQL
 
 ---
 
-## 🔄 CI/CD Pipeline
+# 🔄 CI/CD Pipeline
 
 Automated deployment implemented using GitHub Actions.
 
-### Workflow
+## Workflow
 
 ```text
 Code Change
@@ -312,7 +602,7 @@ Container Restart
 Production Deployment
 ```
 
-### Automated Tasks
+## Automated Tasks
 
 * Pull Latest Source Code
 * Build Spring Boot Application
@@ -322,23 +612,38 @@ Production Deployment
 
 ---
 
-## 🎯 Concepts Demonstrated
+# 🎓 Concepts Demonstrated
 
-### Backend Engineering
+## Backend Engineering
 
-* REST API Development
+* REST API Design
 * DTO Pattern
 * Layered Architecture
 * Dynamic Searching
 * Pagination
+* Authentication
+* Authorization
+* Resource Ownership
+* Validation
+* Exception Handling
 
-### Database Design
+## Database Design
 
 * PostgreSQL
 * JPA/Hibernate
-* Entity Relationships
+* Bidirectional Relationships
+* Cascade Operations
+* Entity Auditing
 
-### DevOps
+## Security
+
+* JWT Authentication
+* Spring Security
+* BCrypt Password Hashing
+* Role-Based Access Control
+* Ownership-Based Authorization
+
+## DevOps
 
 * Docker
 * Docker Compose
@@ -347,33 +652,54 @@ Production Deployment
 * GitHub Actions
 * CI/CD Automation
 
-### Cloud Computing
+## Cloud Computing
 
-* EC2 Instance Management
+* EC2 Deployment
 * Security Groups
 * SSH Authentication
 * Environment Configuration
 
 ---
 
-## 🚀 Future Enhancements
+# 📊 Project Status
 
-* JWT Authentication
-* Role-Based Access Control
-* Shopping Cart
-* Payment Gateway Integration
-* Redis Caching
-* Unit Testing
-* Integration Testing
-* AWS RDS Migration
-* AWS ECR Deployment
+```text
+Authentication      ✅ Completed
+Authorization       ✅ Completed
+Order Ownership     ✅ Completed
+Review Ownership    ✅ Completed
+Validation          ✅ Completed
+Exception Handling  ✅ Completed
+Audit Fields        ✅ Completed
+Docker              ✅ Completed
+AWS Deployment      ✅ Completed
+CI/CD Pipeline      ✅ Completed
+```
+
+CommerceCore successfully evolved from a CRUD Ecommerce API into a production-style cloud-native backend platform demonstrating backend engineering, security, cloud deployment, DevOps automation, and modern software architecture practices.
 
 ---
 
-## 👨‍💻 Author
+# 🚀 Future Roadmap
+
+Potential future enhancements:
+
+* Redis Caching
+* Payment Gateway Integration
+* Shopping Cart Service
+* AWS RDS Migration
+* AWS ECR Deployment
+* Microservices Architecture
+* API Gateway
+* Service Discovery
+* Kubernetes Deployment
+
+---
+
+# 👨‍💻 Author
 
 **Bharath**
 
-Aspiring Software Developer | Cloud & DevOps Enthusiast
+Aspiring Software Developer | Backend Engineering | Cloud & DevOps Enthusiast
 
 GitHub: https://github.com/77Bharath
