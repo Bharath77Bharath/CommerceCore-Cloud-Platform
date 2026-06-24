@@ -46,7 +46,9 @@ public class ProductSeeder implements CommandLineRunner {
                                             null,
                                             5.0,
                                             "Amazing camera quality and battery life.",
-                                            null
+                                            null,
+                                            null,
+                                            "Demo User"
                                     )
                             )
                     ),
@@ -74,7 +76,9 @@ public class ProductSeeder implements CommandLineRunner {
                                             null,
                                             5.0,
                                             "Excellent display and AI features.",
-                                            null
+                                            null,
+                                            null,
+                                            "Demo User"
                                     )
                             )
 
@@ -103,7 +107,9 @@ public class ProductSeeder implements CommandLineRunner {
                                             null,
                                             5.0,
                                             "Super fast and lightweight laptop.",
-                                            null
+                                            null,
+                                            null,
+                                            "Demo User"
                                     )
                             )
                     ),
@@ -131,7 +137,9 @@ public class ProductSeeder implements CommandLineRunner {
                                             null,
                                             4.0,
                                             "Great performance for development work.",
-                                            null
+                                            null,
+                                            null,
+                                            "Demo User"
                                     )
                             )
                     ),
@@ -159,7 +167,9 @@ public class ProductSeeder implements CommandLineRunner {
                                             null,
                                             5.0,
                                             "Best noise cancellation I've used.",
-                                            null
+                                            null,
+                                            null,
+                                            "Demo User"
                                     )
                             )
                     ),
@@ -187,7 +197,9 @@ public class ProductSeeder implements CommandLineRunner {
                                             null,
                                             5.0,
                                             "Perfect mouse for productivity.",
-                                            null
+                                            null,
+                                            null,
+                                            "Demo User"
                                     )
                             )
                     ),
@@ -215,7 +227,9 @@ public class ProductSeeder implements CommandLineRunner {
                                             null,
                                             5.0,
                                             "Excellent fitness and health tracking.",
-                                            null
+                                            null,
+                                            null,
+                                            "Demo User"
                                     )
                             )
                     ),
@@ -243,7 +257,9 @@ public class ProductSeeder implements CommandLineRunner {
                                             null,
                                             4.0,
                                             "Beautiful colors and picture quality.",
-                                            null
+                                            null,
+                                            null,
+                                            "Demo User"
                                     )
                             )
                     ),
@@ -271,7 +287,9 @@ public class ProductSeeder implements CommandLineRunner {
                                             null,
                                             5.0,
                                             "Fantastic reading experience.",
-                                            null
+                                            null,
+                                            null,
+                                            "Demo User"
                                     )
                             )
                     ),
@@ -299,7 +317,10 @@ public class ProductSeeder implements CommandLineRunner {
                                             null,
                                             5.0,
                                             "Amazing gaming performance and exclusives.",
-                                            null)
+                                            null,
+                                            null,
+                                            "Demo User"
+                                    )
                             )
                     )
             );
